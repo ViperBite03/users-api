@@ -24,7 +24,7 @@ export const login = async (req: Request, res: Response, prisma: PrismaClient) =
 
     //Si coincide -> generar token
     if (validPassword) {
-      const token = jwt.sign({ email: user.email }, process.env.SECRETKEY || '', { expiresIn: '1h' }) //payload: la info que llega (user, password...)
+      const token = jwt.sign({ email: user.email }, process.env.SECRETKEY || '', { expiresIn: '3h' }) //payload: la info que llega (user, password...)
 
       //Enviar el token (response?)
       res.send(token)
