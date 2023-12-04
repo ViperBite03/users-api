@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
 
-export const login = async (req: Request, res: Response, prisma: PrismaClient) => {
+const prisma: PrismaClient = new PrismaClient()
+
+export const login = async (req: Request, res: Response) => {
   try {
     //Encontrar el user en la base de datos
     const user = await prisma.user.findUnique({
@@ -27,7 +29,7 @@ export const login = async (req: Request, res: Response, prisma: PrismaClient) =
       const token = jwt.sign({ email: user.email }, process.env.SECRETKEY || '', { expiresIn: '3h' }) //payload: la info que llega (user, password...)
 
       //Enviar el token (response?)
-      res.send(token)
+      res.send('Token: ' + token)
     }
   } catch (error) {}
 }
